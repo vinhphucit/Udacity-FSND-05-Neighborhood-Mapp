@@ -17,19 +17,19 @@ var ViewModel = function () {
         originalArray.forEach(function (favourite, index) {
             if (favourite.name.toLowerCase().indexOf(self.favouriteFilter().toLowerCase()) !== -1) {
                 filteredArray.push(favourite);
-                if (favourite.marker != null) {
-                    if (favourite.marker.getVisible() == false)
+                if (favourite.marker !== null) {
+                    if (favourite.marker.getVisible() === false)
                         favourite.marker.animation = google.maps.Animation.DROP;
                     favourite.marker.setMap(self.map);
                 }
             } else {
-                if (favourite.marker != null)
+                if (favourite.marker !== null)
                     favourite.marker.setMap(null);
 
             }
         });
         return filteredArray;
-    })
+    });
     // this.filteredList = ko.computed(function () {
     //     console.log(self.favouriteFilter());
     //     var filter = self.favouriteFilter().toLowerCase();
@@ -66,12 +66,12 @@ var ViewModel = function () {
             bounds.extend(fav.marker.position);
         });
         self.map.fitBounds(bounds);
-    }
+    };
 
 
     this.selectFavourite = function (data) {
         self.populateInfoWindow(data.marker, self.foursquareInfoWindow);
-    }
+    };
 
     this.createMarker = function (fav) {
         var marker = new google.maps.Marker({
@@ -94,7 +94,7 @@ var ViewModel = function () {
             this.setIcon(self.makeMarkerIcon(true));
         });
         return marker;
-    }
+    };
     this.populateInfoWindow = function (marker, infowindow) {
         if (infowindow.marker != marker) {
             self.map.panTo(new google.maps.LatLng(marker.position.lat(), marker.position.lng()));
@@ -107,7 +107,7 @@ var ViewModel = function () {
             infowindow.open(self.map, marker);
             infowindow.addListener('closeclick', function () {
                 infowindow.marker = null;
-            })
+            });
         }
         var foursquareApi = new FoursquareApi();
         foursquareApi.requestFoursqureApi(marker.position.lat(), marker.position.lng(), function (err, response) {
@@ -125,15 +125,15 @@ var ViewModel = function () {
             }
         });
 
-    }
+    };
 
     this.makeMarkerIcon = function (defaultIcon) {
         if (defaultIcon)
             return new google.maps.MarkerImage("imgs/marker.png");
         else
             return new google.maps.MarkerImage("imgs/marker_hover.png");
-    }
-}
+    };
+};
 var vm = new ViewModel();
 ko.applyBindings(vm);
 function initMapAsyn() {
