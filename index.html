@@ -5,21 +5,30 @@
     <meta charset="utf-8">
     <link rel="stylesheet" href="css/style.css">
     <script src="libs/jquery-3.2.1.min.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7_2mjv6BUTJSpU_tW4RTRbbLKAmpUZwE&callback=initMapAsyn"
-            async defer></script>
+
     <script src="models/FavouriteModel.js"></script>
+    <script src="js/neighborhood.js"></script>
     <script src="services/FoursquareApi.js"></script>
 </head>
 <body>
 <div id="map-canvas"></div>
 <div id="container">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box" data-bind="value: favouriteFilter, valueUpdate: 'afterkeydown'">
+    <div class="humberger-search">
+        <div>
+            <input id="pac-input" class="controls"
+                   type="text" placeholder="Search Box"
+                   data-bind="value: favouriteFilter, valueUpdate: 'afterkeydown'"/>
+            <input type="image" class="humberger" src="imgs/humberger.png" onclick="toggleMenu()"/>
+        </div>
 
-    <div data-bind="foreach: filterArray" class="favourite-item-container">
+    </div>
+    <div data-bind="foreach: filterArray" id="favouriteId" class="favourite-item-container favourite-item-container-responsive">
         <div class="favourite control" data-bind="text: $data.name, click: $parent.selectFavourite"></div>
     </div>
 </div>
 <script src="libs/knockout-3.4.2.js"></script>
 <script src="app.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7_2mjv6BUTJSpU_tW4RTRbbLKAmpUZwE&callback=initMapAsyn"
+        async defer></script>
 </body>
 </html>

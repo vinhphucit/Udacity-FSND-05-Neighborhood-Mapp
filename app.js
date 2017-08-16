@@ -17,36 +17,20 @@ var ViewModel = function () {
         originalArray.forEach(function (favourite, index) {
             if (favourite.name.toLowerCase().indexOf(self.favouriteFilter().toLowerCase()) !== -1) {
                 filteredArray.push(favourite);
-                if (favourite.marker !== null) {
+                if (favourite.marker) {
                     if (favourite.marker.getVisible() === false)
                         favourite.marker.animation = google.maps.Animation.DROP;
                     favourite.marker.setMap(self.map);
                 }
             } else {
-                if (favourite.marker !== null)
+                if (favourite.marker)
                     favourite.marker.setMap(null);
 
             }
         });
+        console.log(filteredArray);
         return filteredArray;
     });
-    // this.filteredList = ko.computed(function () {
-    //     console.log(self.favouriteFilter());
-    //     var filter = self.favouriteFilter().toLowerCase();
-    //     if (!filter) {
-    //         self.locationList().forEach(function (locationItem) {
-    //             locationItem.visible(true);
-    //         });
-    //         return self.locationList();
-    //     } else {
-    //         return ko.utils.arrayFilter(self.locationList(), function (locationItem) {
-    //             var string = locationItem.name.toLowerCase();
-    //             var result = (string.search(filter) >= 0);
-    //             locationItem.visible(result);
-    //             return result;
-    //         });
-    //     }
-    // }, self);
 
     this.initMap = function () {
 
@@ -115,7 +99,7 @@ var ViewModel = function () {
                 if (response.response.venues.length > 0) {
                     var venue = response.response.venues[0];
 
-                    infowindow.setContent('<div><strong>Name: ' + venue.name + '</strong></div><div>Address: ' + venue.location.formattedAddress[0] + '</div><div>Phone: ' + venue.contact.phone + ' </div>');
+                    infowindow.setContent('<div><div><strong>Name: ' + venue.name + '</strong></div><div>Address: ' + venue.location.formattedAddress[0] + '</div><div>Phone: ' + venue.contact.phone + ' </div></div>');
                 }
 
                 console.log(response);
@@ -133,7 +117,9 @@ var ViewModel = function () {
         else
             return new google.maps.MarkerImage("imgs/marker_hover.png");
     };
+
 };
+
 var vm = new ViewModel();
 ko.applyBindings(vm);
 function initMapAsyn() {
