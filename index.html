@@ -22,13 +22,13 @@
         </div>
 
     </div>
-    <div data-bind="foreach: filterArray" id="favouriteId" class="favourite-item-container favourite-item-container-responsive">
+    <div data-bind="foreach: filterArray" id="favouriteId"
+         class="favourite-item-container favourite-item-container-responsive">
         <div class="favourite control" data-bind="text: $data.name, click: $parent.selectFavourite"></div>
     </div>
 </div>
 <script src="libs/knockout-3.4.2.js"></script>
 <script src="app.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7_2mjv6BUTJSpU_tW4RTRbbLKAmpUZwE&callback=initMapAsyn"
-        async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA7_2mjv6BUTJSpU_tW4RTRbbLKAmpUZwE&callback=initMapAsyn" onerror="onErrorHandler()" async defer></script>
 </body>
 </html>

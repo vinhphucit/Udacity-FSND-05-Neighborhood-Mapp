@@ -52,6 +52,9 @@ var ViewModel = function () {
         self.map.fitBounds(bounds);
     };
 
+    this.onErrorHandler = function () {
+        alert("Can not load map, please wait some minutes and reload browser");
+    }
 
     this.selectFavourite = function (data) {
         self.populateInfoWindow(data.marker, self.foursquareInfoWindow);
@@ -98,8 +101,19 @@ var ViewModel = function () {
             if (!err) {
                 if (response.response.venues.length > 0) {
                     var venue = response.response.venues[0];
-
-                    infowindow.setContent('<div><div><strong>Name: ' + venue.name + '</strong></div><div>Address: ' + venue.location.formattedAddress[0] + '</div><div>Phone: ' + venue.contact.phone + ' </div></div>');
+                    var restName = "";
+                    var restPhone = "";
+                    var restAddress = "";
+                    if(venue.name){
+                        restName = venue.name;
+                    }
+                    if(venue.location && venue.location.formattedAddress&& venue.location.formattedAddress.length>0){
+                        restAddress = venue.location.formattedAddress[0];
+                    }
+                    if(venue.contact && venue.contact.phone){
+                        restPhone = venue.contact.phone;
+                    }
+                    infowindow.setContent('<div><div><strong>Name: ' + restName + '</strong></div><div>Address: ' + restAddress + '</div><div>Phone: ' + restPhone + ' </div></div>');
                 }
 
                 console.log(response);
@@ -124,4 +138,8 @@ var vm = new ViewModel();
 ko.applyBindings(vm);
 function initMapAsyn() {
     vm.initMap();
+}
+
+function onErrorHandler() {
+    vm.onErrorHandler();
 }
