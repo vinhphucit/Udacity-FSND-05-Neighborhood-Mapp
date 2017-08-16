@@ -54,7 +54,7 @@ var ViewModel = function () {
 
     this.onErrorHandler = function () {
         alert("Can not load map, please wait some minutes and reload browser");
-    }
+    };
 
     this.selectFavourite = function (data) {
         self.populateInfoWindow(data.marker, self.foursquareInfoWindow);
